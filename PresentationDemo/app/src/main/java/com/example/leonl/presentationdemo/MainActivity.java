@@ -13,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements Visualizer.OnDataCaptureListener {
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
     private Visualizer visualizer;
     private WhimRenderer whimRenderer;
     private WhimSurface whimSurface;
+    private TextView fftShow = (TextView) findViewById(R.id.fft);
+    private TextView waveformShow = (TextView) findViewById(R.id.waveform);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +77,8 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
      */
     @Override
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
-        // Update WaveForm data to Renderer
+        char number = (char)(waveform.length + '0');
+        waveformShow.setText(number);
     }
 
     /**
@@ -86,7 +90,8 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
      */
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
-        // Update FFT data to Renderer
+        char number = (char)(fft.length + '0');
+        fftShow.setText(number);
     }
 
     /**
@@ -134,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
         visualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate(), true, true);
         visualizer.setEnabled(true);
 
-        setContentView(whimSurface);
+        setContentView(R.layout.activity_main);
     }
 
     @Override
