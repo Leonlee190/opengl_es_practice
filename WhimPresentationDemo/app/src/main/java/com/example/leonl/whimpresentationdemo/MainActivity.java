@@ -121,11 +121,11 @@ public class MainActivity extends AppCompatActivity implements Visualizer.OnData
 
     @Override
     public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
-        int i = 0;
+        // What in the fuck do i do with the waveform
     }
 
     @Override
     public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
-        int i = 0;
+        whimSurfaceView.updateFft(fft);
     }
 }

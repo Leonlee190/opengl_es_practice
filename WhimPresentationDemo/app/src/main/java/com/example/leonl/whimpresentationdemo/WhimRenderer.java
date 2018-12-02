@@ -14,7 +14,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class WhimRenderer implements GLSurfaceView.Renderer {
     static int AUDIO_COUNT;
-    static int VERTEX_COUNT;
+    static int VERTEX_COUNT = 5;
     static final int POSITION_DATA_SIZE = 3;
     static final int BYTES_PER_FLOAT = 4;
     static final int STRIDE_BYTES = 7 * BYTES_PER_FLOAT;
@@ -229,6 +229,11 @@ public class WhimRenderer implements GLSurfaceView.Renderer {
         Matrix.frustumM(projectionMatrix, 0, left, right, bottom, top, near, far);
     }
 
+    public void newFftData(FloatBuffer fftData, int vCount){
+        lineVertexBuffer = fftData;
+        VERTEX_COUNT = vCount;
+    }
+
     @Override
     public void onDrawFrame(GL10 gl) {
         GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
@@ -250,6 +255,6 @@ public class WhimRenderer implements GLSurfaceView.Renderer {
         Matrix.multiplyMM(mvpMatrix, 0, projectionMatrix, 0, mvpMatrix, 0);
 
         GLES20.glUniformMatrix4fv(mvpMatrixHandle, 1, false, mvpMatrix, 0);
-        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, 5);
+        GLES20.glDrawArrays(GLES20.GL_LINE_STRIP, 0, VERTEX_COUNT);
     }
 }
